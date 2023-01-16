@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Tinos:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;600;800&family=Tinos:ital@1&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,5 +14,10 @@
 
 .DraftEditor-root {
   height: 200px !important;
-  @apply bg-gray-100 focus:bg-gray-200 p-3 text-xs;
+  @apply bg-gray-100 border-gray-200 border-2 border-t-0 focus:bg-gray-200 p-3 text-xs;
+}
+
+.twitter-picker {
+  border: none;
+  box-shadow: none;
 }

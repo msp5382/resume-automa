@@ -43,15 +43,15 @@ export const RichEditor = ({ onChange, value }: IRichTextProps) => {
 
   return (
     <div>
-      <div className="flex bg-gray-100 text-xs">
+      <div className="flex bg-gray-100 text-xs border-2 border-gray-800">
         <button
-          className="border-2 p-1 font-bold border-gray-800 border-r-0"
+          className="p-1 font-bold border-gray-800 border-r-2 hover:bg-slate-300"
           onClick={() => richEdit("BOLD")}
         >
           Bold
         </button>
         <button
-          className="border-2 p-1 italic border-gray-800"
+          className="p-1 italic border-gray-800 border-r-2  hover:bg-slate-300"
           onClick={() => richEdit("ITALIC")}
         >
           Italic

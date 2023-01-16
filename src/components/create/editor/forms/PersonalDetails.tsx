@@ -1,8 +1,9 @@
 import { TextBox } from "./common/TextBox";
 import { ImageInput } from "./common/ImageInput";
 import { useResumeAction } from "@/common/hooks/useResumeAction";
+import { RenameableSectionTitle } from "./common/RenameableSectionTitle";
 export const PersonalDetails = () => {
-  const { state, setPersonalProfile } = useResumeAction();
+  const { state, setPersonalProfile, setSectionTitle } = useResumeAction();
   const {
     personal_profile: {
       title,
@@ -17,7 +18,15 @@ export const PersonalDetails = () => {
   } = state;
   return (
     <div className="flex flex-col gap-2 py-1">
-      <div className="">Personal Details</div>
+      <RenameableSectionTitle
+        onRename={(title) => {
+          setSectionTitle({
+            section: "personal_profile",
+            title,
+          });
+        }}
+        title={state.title_map["personal_profile"]}
+      />
       <div className="grid grid-cols-2 gap-3">
         <TextBox
           onChange={(e) => {

@@ -1,7 +1,24 @@
-import { useContext, useReducer } from "react";
-import { ResumeContext, ResumeContextType } from "../contexts/resumeContext";
+import { useReducer } from "react";
+import { ResumeContextType } from "../contexts/resumeContext";
+import { setPersonalProfileReducer } from "./reducers/personalProfile.reducer";
+import { initialState } from "./initialState";
+import { setProfessionalSummaryReducer } from "./reducers/professionalSummary.reducer";
+import {
+  setEmploymentHistoryReducer,
+  addEmploymentHistoryReducer,
+} from "./reducers/employmentHistory.reducer";
+import {
+  addEducationReducer,
+  setEducationReducer,
+} from "./reducers/education.reducer";
+import { addSkillReducer, setSkillReducer } from "./reducers/skill.reducer";
+import { setSectionTitleReducer } from "./reducers/sectionTitle.reducer";
+import { setColorReducer } from "./reducers/color.reducer";
 
 export type State = {
+  title_map: {
+    [key: string]: string;
+  };
   personal_profile: {
     [key: string]: any;
   };
@@ -11,96 +28,64 @@ export type State = {
   employment_history: {
     [key: string]: any;
   }[];
+  education: {
+    [key: string]: any;
+  }[];
+  skill: {
+    [key: string]: any;
+  }[];
 };
 
-type Action = {
+export type Action = {
   type: string;
   payload: any;
 };
 
 export enum ActionType {
+  SET_SECTION_TITLE = "SET_SECTION_TITLE",
+  // Personal Profile
   SET_PERSONAL_PROFILE = "SET_PERSONAL_PROFILE",
+  // Professional Summary
   SET_PROFESSIONAL_SUMMARY = "SET_PROFESSIONAL_SUMMARY",
+  // Employment History
   ADD_EMPLOYMENT_HISTORY = "ADD_EMPLOYMENT_HISTORY",
   SET_EMPLOYMENT_HISTORY = "SET_EMPLOYMENT_HISTORY",
   DELETE_EMPLOYMENT_HISTORY = "DELETE_EMPLOYMENT_HISTORY",
+  // Education
+  ADD_EDUCATION = "ADD_EDUCATION",
+  SET_EDUCATION = "SET_EDUCATION",
+  DELETE_EDUCATION = "DELETE_EDUCATION",
+  // Skill
+  ADD_SKILL = "ADD_SKILL",
+  SET_SKILL = "SET_SKILL",
+  DELETE_SKILL = "DELETE_SKILL",
+  // Color
+  SET_COLOR = "SET_COLOR",
 }
-
-const initialState = {
-  personal_profile: {
-    title: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    country: "",
-    city: "",
-    address: "",
-  },
-  professional_summary: {
-    summary: "",
-  },
-  employment_history: [
-    {
-      job_title: "",
-      employer: "",
-      start: "",
-      end: "",
-      city: "",
-      description: "",
-      index: 0,
-      _key: 0,
-    },
-  ],
-};
 
 function reducer(state: State, action: Action) {
   console.log(action.type);
   switch (action.type) {
     case ActionType.SET_PERSONAL_PROFILE:
-      return {
-        ...state,
-        personal_profile: {
-          ...state.personal_profile,
-          ...action.payload,
-        },
-      };
+      return setPersonalProfileReducer(state, action);
     case ActionType.SET_PROFESSIONAL_SUMMARY:
-      return {
-        ...state,
-        professional_summary: {
-          ...state.professional_summary,
-          ...action.payload,
-        },
-      };
+      return setProfessionalSummaryReducer(state, action);
     case ActionType.ADD_EMPLOYMENT_HISTORY:
-      const newEmploymentHistory = {
-        job_title: "",
-        employer: "",
-        start: "",
-        end: "",
-        city: "",
-        description: "",
-        index: state.employment_history.length,
-        _key: state.employment_history.length,
-      };
-      return {
-        ...state,
-        employment_history: [...state.employment_history, newEmploymentHistory],
-      };
+      return addEmploymentHistoryReducer(state, action);
     case ActionType.SET_EMPLOYMENT_HISTORY:
-      const { _key, key, value } = action.payload;
-      const employmentHistory = state.employment_history.find(
-        (item) => item._key === _key
-      )!;
-      employmentHistory[key] = value;
-      return {
-        ...state,
-        employment_history: [
-          ...state.employment_history.filter((item) => item._key !== _key),
-          employmentHistory,
-        ],
-      };
+      return setEmploymentHistoryReducer(state, action);
+    case ActionType.ADD_EDUCATION:
+      return addEducationReducer(state, action);
+    case ActionType.SET_EDUCATION:
+      return setEducationReducer(state, action);
+    case ActionType.ADD_SKILL:
+      return addSkillReducer(state, action);
+    case ActionType.SET_SKILL:
+      return setSkillReducer(state, action);
+    case ActionType.SET_SECTION_TITLE:
+      return setSectionTitleReducer(state, action);
+    case ActionType.SET_COLOR:
+      return setColorReducer(state, action);
     default:
       throw new Error();
   }

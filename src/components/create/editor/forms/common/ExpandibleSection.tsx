@@ -5,8 +5,14 @@ import {
 } from "react-icons/io5";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useRaisedShadow } from "./hooks/useRaisedShadow";
+import {
+  Children,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useRaisedShadow } from "../hooks/useRaisedShadow";
 
 interface ExpandibleData {
   title: string;
@@ -18,8 +24,9 @@ interface ExpandibleData {
 interface IExpandibleProps {
   data: ExpandibleData[];
   onAddMore?: () => void;
-  title: string;
+  title: JSX.Element;
   onReorder?: (_keys: number[]) => void;
+  children?: any;
 }
 
 interface ExpandibleWithKey extends ExpandibleData {
@@ -57,7 +64,7 @@ const Expandable = ({ item, index }: any) => {
       value={item}
       dragListener={false}
       dragControls={controls}
-      className="w-full border bg-white rounded p-2 pl-5 relative"
+      className="w-full border-2 border-gray-200 bg-white rounded p-2 pl-5 relative"
       onClick={isExpanded ? undefined : toggleExpanded}
     >
       <div className="flex justify-between items-center ">
@@ -94,6 +101,7 @@ export const ExpandibleSection = ({
   title,
   onAddMore,
   onReorder,
+  children,
 }: IExpandibleProps) => {
   const onlyKeys = data.map(({ _key }) => _key);
   const [items, setItems] = useState(onlyKeys);
@@ -105,8 +113,9 @@ export const ExpandibleSection = ({
     <expandContext.Provider
       value={{ data: data, expanded: expanded, setExpanded }}
     >
-      <div className="flex flex-col gap-2 py-1 mb-12">
-        <div className="">{title}</div>
+      <div className="flex flex-col gap-2 py-1">
+        {title}
+        {children}
         <Reorder.Group
           className="flex flex-col gap-2"
           axis="y"

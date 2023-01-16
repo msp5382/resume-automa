@@ -5,45 +5,39 @@ import { TextBox } from "./common/TextBox";
 import { ExpandibleSection } from "./common/ExpandibleSection";
 import { RenameableSectionTitle } from "./common/RenameableSectionTitle";
 
-const EmploymentHistoryBlock = ({
-  order,
-  _key,
-}: {
-  order: number;
-  _key: number;
-}) => {
-  const { state, setEmploymentHistory } = useResumeAction();
-  const { job_title, employer, start, end, description } =
-    state.employment_history.find((item) => item._key === _key)!;
+const EducationBlock = ({ order, _key }: { order: number; _key: number }) => {
+  const { state, setEducation } = useResumeAction();
+  const { school, degree, start, end, description, city } =
+    state.education.find((item) => item._key === _key)!;
   return (
     <div className="grid grid-cols-2 gap-1">
       <TextBox
         onChange={(e) => {
-          setEmploymentHistory({
+          setEducation({
             _key,
-            key: "job_title",
+            key: "school",
             value: e.target.value,
           });
         }}
-        value={job_title}
-        label="Job Title"
-        placeholder="e.g. Frontend Developer"
-      />
-      <TextBox
-        onChange={(e) =>
-          setEmploymentHistory({
-            _key,
-            key: "employer",
-            value: e.target.value,
-          })
-        }
-        value={employer}
-        label="Employer"
+        value={school}
+        label="School"
         placeholder=""
       />
       <TextBox
         onChange={(e) =>
-          setEmploymentHistory({
+          setEducation({
+            _key,
+            key: "degree",
+            value: e.target.value,
+          })
+        }
+        value={degree}
+        label="Degree"
+        placeholder=""
+      />
+      <TextBox
+        onChange={(e) =>
+          setEducation({
             _key,
             key: "start",
             value: e.target.value,
@@ -55,7 +49,7 @@ const EmploymentHistoryBlock = ({
       />
       <TextBox
         onChange={(e) =>
-          setEmploymentHistory({
+          setEducation({
             _key,
             key: "end",
             value: e.target.value,
@@ -65,10 +59,22 @@ const EmploymentHistoryBlock = ({
         label="End Date"
         placeholder=""
       />
+      <TextBox
+        onChange={(e) =>
+          setEducation({
+            _key,
+            key: "city",
+            value: e.target.value,
+          })
+        }
+        value={city}
+        label="City"
+        placeholder=""
+      />
       <div className="col-span-2 pt-2">
         <RichEditor
           onChange={(value) =>
-            setEmploymentHistory({
+            setEducation({
               _key,
               key: "description",
               value: value,
@@ -81,8 +87,8 @@ const EmploymentHistoryBlock = ({
   );
 };
 
-export const EmploymentHistory = () => {
-  const { state, addEmploymentHistory, setEmploymentHistory, setSectionTitle } =
+export const Education = () => {
+  const { state, addEducation, setEducation, setSectionTitle } =
     useResumeAction();
   return (
     <ExpandibleSection
@@ -90,29 +96,29 @@ export const EmploymentHistory = () => {
         <RenameableSectionTitle
           onRename={(title) => {
             setSectionTitle({
-              section: "employment_history",
+              section: "education",
               title,
             });
           }}
-          title={state.title_map["employment_history"]}
+          title={state.title_map["education"]}
         />
       }
       onAddMore={() => {
-        addEmploymentHistory();
+        addEducation();
       }}
-      data={state.employment_history.map((item) => {
+      data={state.education.map((item) => {
         return {
-          title: item.job_title || "Job Title",
-          description: item.employer || "Your Company",
+          title: item.school || "School",
+          description: item.degree || "Degree",
           _key: item._key,
           Child: (order: number, _key: number) => (
-            <EmploymentHistoryBlock order={order} _key={_key} />
+            <EducationBlock order={order} _key={_key} />
           ),
         };
       })}
       onReorder={(newOrder) => {
         newOrder.map((_key, index) => {
-          setEmploymentHistory({
+          setEducation({
             _key: _key,
             key: "index",
             value: index,
@@ -121,9 +127,8 @@ export const EmploymentHistory = () => {
       }}
     >
       <div className="text-[10px] text-gray-400 font-thin">
-        Show your relevant experience (last 10 years). Use bullet points to note
-        your achievements, if possible - use numbers/facts (Achieved X, measured
-        by Y, by doing Z).
+        A varied education on your resume sums up the value that your learnings
+        and background will bring to job.
       </div>
     </ExpandibleSection>
   );

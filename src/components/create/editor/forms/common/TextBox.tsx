@@ -17,7 +17,7 @@ export const TextBox = ({
       <input
         value={value}
         onChange={onChange}
-        className=" bg-gray-100 p-2 rounded-md outline-none focus:bg-gray-200"
+        className=" bg-gray-100 border-gray-200 border-2 p-2 rounded-md outline-none focus:bg-gray-200"
         placeholder={placeholder}
       />
     </div>
