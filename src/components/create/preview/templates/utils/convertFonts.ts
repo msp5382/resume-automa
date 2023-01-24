@@ -1,6 +1,6 @@
 export const convertFonts = (
   width: number,
-  size: "2xl" | "xl" | "lg" | "base" | "sm" | "xs"
+  size: "2xl" | "xl" | "lg" | "base" | "sm" | "xs" | "3xl"
 ) => {
   const RATIO = (width / 2480) * 2.5;
   switch (size) {
@@ -28,6 +28,11 @@ export const convertFonts = (
       return {
         fontSize: `${24 * RATIO}px`,
         lineHeight: `${30 * RATIO}px`,
+      };
+    case "3xl":
+      return {
+        fontSize: `${32 * RATIO}px`,
+        lineHeight: `${36 * RATIO}px`,
       };
     case "base":
       return {

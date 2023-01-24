@@ -43,11 +43,11 @@ export const Preview = () => {
   };
 
   return (
-    <div className="bg-slate-700 h-screen flex flex-col relative">
+    <div className="bg-black h-screen flex flex-col relative">
       <div className="m-auto w-[80%]">
         <div
           ref={ref}
-          className="shadow-2xl aspect-[1/1.414] bg-white relative"
+          className="shadow-2xl m-auto h-[80vh] aspect-[1/1.414] bg-white relative"
         >
           <Template _ref={printRef} state={state} style={style} />
         </div>
